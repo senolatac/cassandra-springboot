@@ -1,0 +1,25 @@
+version: '3.0'
+services:   
+    cassandra:
+        build:
+            context: ./
+            dockerfile: cassandra/Dockerfile
+        ports:
+            - "9042:9042"
+        container_name: cassandra
+    course-server:
+        build:
+            context: ./
+            dockerfile: course-server/Dockerfile
+        environment:
+            SPRING_DATA_CASSANDRA_CONTACT_POINTS: cassandra        
+        entrypoint: /wait-for-it.sh cassandra:9042 -- java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=container -jar app.jar
+        depends_on:
+            - cassandra
+        ports:
+            - 8080:8080  
+    course-client:
+        build: ./course-client
+        ports:
+            - 4200:80            
+            

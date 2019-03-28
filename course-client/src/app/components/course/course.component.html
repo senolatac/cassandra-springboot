@@ -1,0 +1,8 @@
+<div class="container">
+<header class="jumbotron my-4">
+  <h1 class="display-3"> Welcome to <strong> {{currentCourse.title}}</strong> </h1>
+</header>
+<div class="alert alert-success" *ngIf="currentSummary">
+  <strong>Hit Count: </strong> {{currentSummary.hitCount}}
+</div>
+</div>
